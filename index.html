@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Treinos de Verdade</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+    }
+    header {
+      background-color: #1e1e1e;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #bbb;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    nav a {
+      padding: 10px 20px;
+      background-color: #333;
+      border-radius: 20px;
+      text-decoration: none;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background-color: #555;
+    }
+    .content {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .treino {
+      background-color: #1c1c1c;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .treino iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+      border-radius: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1e1e1e;
+      margin-top: 40px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Treinos de Verdade</h1>
+    <p>Treine com o que você tem. Real, simples e eficiente.</p>
+  </header>  <nav>
+    <a href="#treinos">Ver Treinos</a>
+    <a href="#enviar">Enviar Treino</a>
+  </nav>  <div class="content">
+    <section id="treinos">
+      <h2>Treinos Enviados</h2>
+      <div class="treino">
+        <h3>Agachamento com Mochila</h3>
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+        <p><strong>Nível:</strong> Intermediário</p>
+        <p><strong>Equipamento:</strong> Mochila com bidões</p>
+        <p>Descrição: Agachamento profundo usando mochila carregada como carga. Ideal para pernas e glúteos.</p>
+      </div>
+      <!-- Mais treinos podem ser adicionados aqui -->
+    </section><section id="enviar">
+  <h2>Enviar seu Treino</h2>
+  <form>
+    <p><label>Nome do treino:<br><input type="text" required></label></p>
+    <p><label>Link do vídeo (YouTube/TikTok):<br><input type="url" required></label></p>
+    <p><label>Equipamento usado:<br><input type="text"></label></p>
+    <p><label>Nível:<br>
+      <select>
+        <option>Iniciante</option>
+        <option>Intermediário</option>
+        <option>Avançado</option>
+      </select>
+    </label></p>
+    <p><label>Descrição:<br><textarea rows="4"></textarea></label></p>
+    <p><button type="submit">Enviar</button></p>
+  </form>
+</section>
+
+  </div>  <footer>
+    &copy; 2025 Treinos de Verdade | Contato: treinos@exemplo.com
+  </footer>
+</body>
+  </html>
