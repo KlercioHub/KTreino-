@@ -1,151 +1,180 @@
-<!DOCTYPE html>
-<html lang="pt">
+<!DOCTYPE html><html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>KTreino</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #141e30, #243b55);
-      color: white;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
       text-align: center;
     }
-
     header {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 20px 10px;
+      padding: 30px 10px;
+      background-color: rgba(0, 0, 0, 0.4);
     }
-
-    h1 {
-      margin: 0;
-      font-size: 36px;
-    }
-
-    p {
-      font-size: 18px;
-      margin-top: 10px;
-    }
-
-    .gender-buttons, .day-buttons {
-      margin-top: 20px;
+    h1 { font-size: 36px; margin: 0; }
+    .button-group {
+      margin: 15px 0;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      padding: 0 10px;
     }
-
     button {
       background-color: #00c3ff;
-      color: white;
       border: none;
-      padding: 12px 18px;
+      padding: 10px 18px;
       border-radius: 10px;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      color: white;
+      transition: 0.3s;
     }
-
     button:hover {
-      background-color: #008db8;
+      background-color: #009ccc;
     }
-
-    #treino {
+    #treino, #progresso, #calendario {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 20px;
+      background-color: rgba(255,255,255,0.08);
+      border-radius: 15px;
+    }
+    ul {
+      text-align: left;
+      max-width: 500px;
+      margin: 0 auto;
+      padding-left: 0;
+    }
+    li {
+      margin-bottom: 10px;
+      list-style: none;
+      position: relative;
+    }
+    iframe {
+      margin-top: 20px;
+      width: 90%;
+      max-width: 560px;
+      height: 315px;
+      border: none;
+      border-radius: 10px;
+    }
+    footer {
       margin-top: 30px;
       padding: 20px;
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    footer {
-      margin-top: 40px;
-      padding: 20px;
-      background-color: rgba(0, 0, 0, 0.3);
       font-size: 14px;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .calendar-day {
+      padding: 10px;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-
   <header>
     <h1>KTreino</h1>
-    <p>Escolha o seu treino por dia e gênero</p>
-  </header>
-
-  <section class="gender-buttons">
+    <p>Escolhe teu gênero, nível e dia para ver o treino com vídeo</p>
+  </header>  <div class="button-group">
     <button onclick="selecionarGenero('homem')">Homem</button>
     <button onclick="selecionarGenero('mulher')">Mulher</button>
-  </section>
-
-  <section class="day-buttons">
+  </div>
+  <div class="button-group">
+    <button onclick="selecionarNivel('iniciante')">Iniciante</button>
+    <button onclick="selecionarNivel('intermediario')">Intermediário</button>
+    <button onclick="selecionarNivel('avancado')">Avançado</button>
+  </div>
+  <div class="button-group">
     <button onclick="mostrarTreino('segunda')">Segunda</button>
     <button onclick="mostrarTreino('terca')">Terça</button>
     <button onclick="mostrarTreino('quarta')">Quarta</button>
     <button onclick="mostrarTreino('quinta')">Quinta</button>
     <button onclick="mostrarTreino('sexta')">Sexta</button>
-    <button onclick="mostrarTreino('sabado')">Sábado</button>
-    <button onclick="mostrarTreino('domingo')">Domingo</button>
-  </section>
-
-  <div id="treino">
+  </div>  <div id="treino">
     <h2>Bem-vindo!</h2>
-    <p>Selecione um gênero e um dia da semana para ver seu treino.</p>
-  </div>
-
-  <footer>
+    <p>Escolha gênero, nível e dia.</p>
+  </div>  <div id="progresso">
+    <h3>Área de Progresso</h3>
+    <p id="contador">Você completou 0 treinos esta semana.</p>
+    <button onclick="marcarTreino()">Marcar como feito</button>
+  </div>  <div id="calendario">
+    <h3>Calendário da Semana</h3>
+    <div class="calendar-grid">
+      <div class="calendar-day">Seg</div>
+      <div class="calendar-day">Ter</div>
+      <div class="calendar-day">Qua</div>
+      <div class="calendar-day">Qui</div>
+      <div class="calendar-day">Sex</div>
+      <div class="calendar-day">Sáb</div>
+      <div class="calendar-day">Dom</div>
+    </div>
+  </div>  <footer>
     Feito por Klercio Gonçalves • © 2025
-  </footer>
+  </footer>  <script>
+    let genero = "", nivel = "";
 
-  <script>
-    const treinos = {
-      homem: {
-        segunda: "Treino de Peito + Tríceps: Flexões, Supino com mochila, Tríceps banco.",
-        terca: "Treino de Costas + Bíceps: Remada curvada, Rosca direta.",
-        quarta: "Treino de Pernas: Agachamento com bidões, Avanço, Panturrilhas.",
-        quinta: "Treino de Ombros: Elevação lateral, Desenvolvimento com mochila.",
-        sexta: "Treino Funcional: Burpees, Abdominais, Polichinelos.",
-        sabado: "Descanso ativo ou cardio leve.",
-        domingo: "Descanso total."
-      },
-      mulher: {
-        segunda: "Glúteos e Posterior: Agachamento sumô, Elevação de quadril.",
-        terca: "Pernas completas: Agachamento, Avanço, Panturrilha.",
-        quarta: "Abdômen e Cardio: Prancha, Elevação de pernas, Corrida parada.",
-        quinta: "Glúteos isolado: Cadeira improvisada, Elevação unilateral.",
-        sexta: "Funcional + Core: Polichinelos, Prancha, Bicicleta no ar.",
-        sabado: "Alongamentos e mobilidade.",
-        domingo: "Descanso total."
+    function selecionarGenero(g) {
+      genero = g;
+      atualizarMensagem();
+    }
+
+    function selecionarNivel(n) {
+      nivel = n;
+      atualizarMensagem();
+    }
+
+    function atualizarMensagem() {
+      if (genero && nivel) {
+        document.getElementById("treino").innerHTML = `<h2>${nivel.toUpperCase()} - ${genero}</h2><p>Escolha o dia da semana</p>`;
       }
-    };
-
-    let generoSelecionado = "";
-
-    function selecionarGenero(genero) {
-      generoSelecionado = genero;
-      document.getElementById("treino").innerHTML = `
-        <h2>Treino ${genero === 'homem' ? 'masculino' : 'feminino'}</h2>
-        <p>Agora selecione o dia da semana para ver o treino.</p>
-      `;
     }
 
     function mostrarTreino(dia) {
-      if (!generoSelecionado) {
-        alert("Por favor, selecione um gênero primeiro.");
+      if (!genero || !nivel) {
+        alert("Seleciona o gênero e nível primeiro!");
         return;
       }
-      const texto = treinos[generoSelecionado][dia];
       document.getElementById("treino").innerHTML = `
         <h2>Treino de ${dia.charAt(0).toUpperCase() + dia.slice(1)}</h2>
-        <p>${texto}</p>
+        <ul>
+          <li>Exercício 1 - ${nivel}</li>
+          <li>Exercício 2 - ${genero}</li>
+          <li>Exercício 3 - Peso corporal</li>
+        </ul>
+        <iframe src="https://www.youtube.com/embed/1919eTCoESo" allowfullscreen></iframe>
       `;
     }
-  </script>
 
-</body>
+    function marcarTreino() {
+      let hoje = new Date();
+      let diaSemana = hoje.getDay(); // 0 = domingo
+      if (diaSemana === 0) {
+        localStorage.setItem("treinos", "0");
+        treinosFeitos = 0;
+      } else {
+        treinosFeitos = parseInt(localStorage.getItem("treinos") || "0") + 1;
+        localStorage.setItem("treinos", treinosFeitos);
+      }
+      atualizarContador();
+    }
+
+    function atualizarContador() {
+      let valor = parseInt(localStorage.getItem("treinos") || "0");
+      document.getElementById("contador").innerText = `Você completou ${valor} treino${valor !== 1 ? 's' : ''} esta semana.`;
+    }
+
+    let treinosFeitos = parseInt(localStorage.getItem("treinos") || "0");
+    atualizarContador();
+  </script></body>
 </html>
