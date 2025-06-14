@@ -1,9 +1,11 @@
-<!DOCTYPE html><html lang="pt">
+<!DOCTYPE html>
+<html lang="pt">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>KTreino</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"/>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -28,40 +30,52 @@
       background-color: #00c3ff;
       border: none;
       padding: 10px 18px;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 15px;
       cursor: pointer;
       color: white;
-      transition: 0.3s;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     button:hover {
+      transform: scale(1.05);
       background-color: #009ccc;
     }
     #treino, #progresso, #calendario {
       margin: 20px auto;
-      max-width: 800px;
+      max-width: 900px;
       padding: 20px;
       background-color: rgba(255,255,255,0.08);
-      border-radius: 15px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: 0.3s ease-in-out;
     }
     ul {
       text-align: left;
-      max-width: 500px;
+      max-width: 600px;
       margin: 0 auto;
       padding-left: 0;
     }
     li {
-      margin-bottom: 10px;
+      margin-bottom: 18px;
       list-style: none;
-      position: relative;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    li i {
+      font-size: 18px;
+      color: #00c3ff;
     }
     iframe {
-      margin-top: 20px;
+      margin-top: 10px;
       width: 90%;
       max-width: 560px;
       height: 315px;
       border: none;
       border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
     footer {
       margin-top: 30px;
@@ -79,37 +93,37 @@
       padding: 10px;
       background-color: rgba(255,255,255,0.1);
       border-radius: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>KTreino</h1>
-    <p>Escolhe teu gênero, nível e dia para ver o treino com vídeo</p>
-  </header>  <div class="button-group">
-    <button onclick="selecionarGenero('homem')">Homem</button>
-    <button onclick="selecionarGenero('mulher')">Mulher</button>
-  </div>
-  <div class="button-group">
-    <button onclick="selecionarNivel('iniciante')">Iniciante</button>
-    <button onclick="selecionarNivel('intermediario')">Intermediário</button>
-    <button onclick="selecionarNivel('avancado')">Avançado</button>
-  </div>
+    <h1><i class="ri-dumbbell-line"></i> KTreino</h1>
+    <p>Teu treino diário com vídeos e progresso</p>
+  </header>
+
   <div class="button-group">
     <button onclick="mostrarTreino('segunda')">Segunda</button>
     <button onclick="mostrarTreino('terca')">Terça</button>
     <button onclick="mostrarTreino('quarta')">Quarta</button>
     <button onclick="mostrarTreino('quinta')">Quinta</button>
     <button onclick="mostrarTreino('sexta')">Sexta</button>
-  </div>  <div id="treino">
+  </div>
+
+  <div id="treino">
     <h2>Bem-vindo!</h2>
-    <p>Escolha gênero, nível e dia.</p>
-  </div>  <div id="progresso">
-    <h3>Área de Progresso</h3>
+    <p>Escolha o dia da semana para ver o treino</p>
+  </div>
+
+  <div id="progresso">
+    <h3>Progresso semanal 🏅</h3>
     <p id="contador">Você completou 0 treinos esta semana.</p>
-    <button onclick="marcarTreino()">Marcar como feito</button>
-  </div>  <div id="calendario">
-    <h3>Calendário da Semana</h3>
+    <button onclick="marcarTreino()">✅ Marcar como feito</button>
+  </div>
+
+  <div id="calendario">
+    <h3>Calendário da Semana 📆</h3>
     <div class="calendar-grid">
       <div class="calendar-day">Seg</div>
       <div class="calendar-day">Ter</div>
@@ -119,62 +133,112 @@
       <div class="calendar-day">Sáb</div>
       <div class="calendar-day">Dom</div>
     </div>
-  </div>  <footer>
+  </div>
+
+  <footer>
     Feito por Klercio Gonçalves • © 2025
-  </footer>  <script>
-    let genero = "", nivel = "";
+  </footer>
+  <script>
+  const treinos = {
+    segunda: [
+      { nome: "Agachamento com barra", video: "https://www.youtube.com/embed/1xMaFs0L3ao" },
+      { nome: "Passada com halteres", video: "https://www.youtube.com/embed/QF0BQS2W80k" },
+      { nome: "Agachamento búlgaro", video: "https://www.youtube.com/embed/2C-uNgKwPLE" },
+      { nome: "Agachamento sumô", video: "https://www.youtube.com/embed/9ZuXKqRbT9k" },
+      { nome: "Cadeira extensora", video: "https://www.youtube.com/embed/8HGOE9DIPTM" },
+      { nome: "Mesa flexora", video: "https://www.youtube.com/embed/U3HlEF_E9fo" },
+      { nome: "Levantamento terra", video: "https://www.youtube.com/embed/op9kVnSso6Q" },
+      { nome: "Stiff com halteres", video: "https://www.youtube.com/embed/gYdlqjiQPAc" },
+      { nome: "Elevação de panturrilha", video: "https://www.youtube.com/embed/-M4-G8p8fmc" },
+      { nome: "Panturrilha no leg press", video: "https://www.youtube.com/embed/Rbslk_0Z1jM" },
+      { nome: "Afundo com barra", video: "https://www.youtube.com/embed/QF0BQS2W80k" }
+    ],
+    terca: [
+      { nome: "Supino reto com barra", video: "https://www.youtube.com/embed/rT7DgCr-3pg" },
+      { nome: "Supino inclinado com halteres", video: "https://www.youtube.com/embed/8iPEnn-ltC8" },
+      { nome: "Supino declinado", video: "https://www.youtube.com/embed/zD7t8NM_7Fs" },
+      { nome: "Flexão de braços", video: "https://www.youtube.com/embed/IODxDxX7oi4" },
+      { nome: "Crucifixo com halteres", video: "https://www.youtube.com/embed/eozdVDA78K0" },
+      { nome: "Crossover no cabo", video: "https://www.youtube.com/embed/taI4XduLpTk" },
+      { nome: "Pullover", video: "https://www.youtube.com/embed/l6e3KOpUooU" },
+      { nome: "Peck deck", video: "https://www.youtube.com/embed/U0VZ4u_d8D0" },
+      { nome: "Flexão diamante", video: "https://www.youtube.com/embed/J0DnG1_S92I" },
+      { nome: "Flexão inclinada", video: "https://www.youtube.com/embed/Dl7KpMa6N5Y" },
+      { nome: "Mergulho entre bancos", video: "https://www.youtube.com/embed/0326dy_-CzM" }
+    ],
+    quarta: [
+      { nome: "Remada curvada com barra", video: "https://www.youtube.com/embed/vT2GjY_Umpw" },
+      { nome: "Remada unilateral", video: "https://www.youtube.com/embed/roCP6wCXPqo" },
+      { nome: "Puxada na frente", video: "https://www.youtube.com/embed/CAwf7n6Luuc" },
+      { nome: "Puxada atrás da nuca", video: "https://www.youtube.com/embed/FPxHzDq4nT0" },
+      { nome: "Puxada com triângulo", video: "https://www.youtube.com/embed/NhVvIDhUIiY" },
+      { nome: "Remada baixa", video: "https://www.youtube.com/embed/djS_wnv3Ztg" },
+      { nome: "Remada cavalinho", video: "https://www.youtube.com/embed/W2eQ6WZLtPA" },
+      { nome: "Encolhimento de ombros", video: "https://www.youtube.com/embed/j3Igk5nyZE4" },
+      { nome: "Barra fixa", video: "https://www.youtube.com/embed/eGo4IYlbE5g" },
+      { nome: "Ponte invertida", video: "https://www.youtube.com/embed/dM0aKE3Wg3A" },
+      { nome: "Remada máquina", video: "https://www.youtube.com/embed/tJRDgljXvEc" }
+    ],
+    quinta: [
+      { nome: "Desenvolvimento com halteres", video: "https://www.youtube.com/embed/2yjwXTZQDDI" },
+      { nome: "Desenvolvimento Arnold", video: "https://www.youtube.com/embed/6Z15_WdXmVw" },
+      { nome: "Elevação lateral", video: "https://www.youtube.com/embed/3VcKaXpzqRo" },
+      { nome: "Elevação frontal", video: "https://www.youtube.com/embed/vvVt3COgQ3k" },
+      { nome: "Pike push-up", video: "https://www.youtube.com/embed/D7KaRcUTQeE" },
+      { nome: "Face pull", video: "https://www.youtube.com/embed/rep-qVOkqgk" },
+      { nome: "Desenvolvimento com barra", video: "https://www.youtube.com/embed/qEwKCR5JCog" },
+      { nome: "Remada alta", video: "https://www.youtube.com/embed/pYcpY20QaE8" },
+      { nome: "Shrugs com halteres", video: "https://www.youtube.com/embed/j3Igk5nyZE4" },
+      { nome: "Arnold press", video: "https://www.youtube.com/embed/6Z15_WdXmVw" },
+      { nome: "Elevação lateral inclinada", video: "https://www.youtube.com/embed/VkI3FGRyPK4" }
+    ],
+    sexta: [
+      { nome: "Rosca direta com barra", video: "https://www.youtube.com/embed/kwG2ipFRgfo" },
+      { nome: "Rosca martelo", video: "https://www.youtube.com/embed/zC3nLlEvin4" },
+      { nome: "Rosca concentrada", video: "https://www.youtube.com/embed/FI8aG4XqNDQ" },
+      { nome: "Rosca 21", video: "https://www.youtube.com/embed/KpXW40PHi0Q" },
+      { nome: "Tríceps testa com barra", video: "https://www.youtube.com/embed/ir5PsbniVSc" },
+      { nome: "Tríceps banco", video: "https://www.youtube.com/embed/6kALZikXxLc" },
+      { nome: "Tríceps pulley", video: "https://www.youtube.com/embed/Pk1KZbA_HvA" },
+      { nome: "Tríceps coice", video: "https://www.youtube.com/embed/YbX7Wd8jQ-Q" },
+      { nome: "Rosca inversa", video: "https://www.youtube.com/embed/_d4G3b2xD8o" },
+      { nome: "Rosca scott", video: "https://www.youtube.com/embed/FI8aG4XqNDQ" },
+      { nome: "Tríceps corda", video: "https://www.youtube.com/embed/2-LAMcpzODU" }
+    ]
+  };
 
-    function selecionarGenero(g) {
-      genero = g;
-      atualizarMensagem();
+  function mostrarTreino(dia) {
+    const treinoDia = treinos[dia];
+    if (!treinoDia) return;
+    let html = `<h2>Treino de ${dia.charAt(0).toUpperCase() + dia.slice(1)}</h2><ul>`;
+    treinoDia.forEach(ex => {
+      html += `<li><i class='ri-check-line'></i> ${ex.nome}</li><iframe src="${ex.video}" allowfullscreen></iframe>`;
+    });
+    html += '</ul>';
+    document.getElementById("treino").innerHTML = html;
+  }
+
+  function marcarTreino() {
+    let hoje = new Date();
+    let diaSemana = hoje.getDay();
+    if (diaSemana === 0) {
+      localStorage.setItem("treinos", "0");
+      treinosFeitos = 0;
+    } else {
+      treinosFeitos = parseInt(localStorage.getItem("treinos") || "0") + 1;
+      localStorage.setItem("treinos", treinosFeitos);
     }
-
-    function selecionarNivel(n) {
-      nivel = n;
-      atualizarMensagem();
-    }
-
-    function atualizarMensagem() {
-      if (genero && nivel) {
-        document.getElementById("treino").innerHTML = `<h2>${nivel.toUpperCase()} - ${genero}</h2><p>Escolha o dia da semana</p>`;
-      }
-    }
-
-    function mostrarTreino(dia) {
-      if (!genero || !nivel) {
-        alert("Seleciona o gênero e nível primeiro!");
-        return;
-      }
-      document.getElementById("treino").innerHTML = `
-        <h2>Treino de ${dia.charAt(0).toUpperCase() + dia.slice(1)}</h2>
-        <ul>
-          <li>Exercício 1 - ${nivel}</li>
-          <li>Exercício 2 - ${genero}</li>
-          <li>Exercício 3 - Peso corporal</li>
-        </ul>
-        <iframe src="https://www.youtube.com/embed/1919eTCoESo" allowfullscreen></iframe>
-      `;
-    }
-
-    function marcarTreino() {
-      let hoje = new Date();
-      let diaSemana = hoje.getDay(); // 0 = domingo
-      if (diaSemana === 0) {
-        localStorage.setItem("treinos", "0");
-        treinosFeitos = 0;
-      } else {
-        treinosFeitos = parseInt(localStorage.getItem("treinos") || "0") + 1;
-        localStorage.setItem("treinos", treinosFeitos);
-      }
-      atualizarContador();
-    }
-
-    function atualizarContador() {
-      let valor = parseInt(localStorage.getItem("treinos") || "0");
-      document.getElementById("contador").innerText = `Você completou ${valor} treino${valor !== 1 ? 's' : ''} esta semana.`;
-    }
-
-    let treinosFeitos = parseInt(localStorage.getItem("treinos") || "0");
     atualizarContador();
-  </script></body>
+  }
+
+  function atualizarContador() {
+    let valor = parseInt(localStorage.getItem("treinos") || "0");
+    document.getElementById("contador").innerText = `Você completou ${valor} treino${valor !== 1 ? 's' : ''} esta semana.`;
+  }
+
+  let treinosFeitos = parseInt(localStorage.getItem("treinos") || "0");
+  atualizarContador();
+</script>
+</body>
 </html>
+
